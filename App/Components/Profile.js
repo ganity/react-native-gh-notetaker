@@ -53,14 +53,14 @@ class Profile extends React.Component{
         )
       }
     });
-    return (
+    return(
       <ScrollView style={styles.container}>
-        <Badge userInfo={this.props.userInfo}/>
+        <Badge userInfo={this.props.userInfo} />
         {list}
       </ScrollView>
-    )
+    );
   }
-};
+}
 
 Profile.propTypes = {
   userInfo: React.PropTypes.object.isRequired

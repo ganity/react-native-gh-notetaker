@@ -41,11 +41,11 @@ class Badge extends React.Component{
         <Text style={styles.name}> {this.props.userInfo.name} </Text>
         <Text style={styles.handle}> {this.props.userInfo.login} </Text>
       </View>
-    )
-  }
-};
-
-Badge.propTypes = {
+    );
+  };
+ 
+}
+Badge.propTypes={
   userInfo: React.PropTypes.object.isRequired
 }
 

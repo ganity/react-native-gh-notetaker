@@ -39,16 +39,17 @@ var styles = StyleSheet.create({
 class Repositories extends React.Component{
   openPage(url){
     this.props.navigator.push({
-      title: 'Web View',
+      name:'Web_View',
       component: Web_View,
-      passProps: {url}
-    });
+      title: 'Web_View Page',
+      params: {url: url}
+    })
   }
   render(){
     var repos = this.props.repos;
     var list = repos.map((item, index) => {
-      var desc = repos[index].description ? <Text style={styles.description}> {repos[index].description} </Text> : <View />;
-      return (
+      var desc = repos[index].description ? <Text style={styles.description}> {repos[index].description}</Text> : <View />;
+      return(
         <View key={index}>
           <View style={styles.rowContainer}>
             <TouchableHighlight
@@ -56,7 +57,7 @@ class Repositories extends React.Component{
               underlayColor='transparent'>
               <Text style={styles.name}>{repos[index].name}</Text>
             </TouchableHighlight>
-            <Text style={styles.stars}> Stars: {repos[index].stargazers_count} </Text>
+            <Text style={styles.stars}> Stars: {repos[index].stargazers_count}</Text>
             {desc}
           </View>
           <Separator />
@@ -70,8 +71,7 @@ class Repositories extends React.Component{
       </ScrollView>
     )
   }
-};
-
+}
 Repositories.propTypes = {
   userInfo: React.PropTypes.object.isRequired,
   repos: React.PropTypes.array.isRequired

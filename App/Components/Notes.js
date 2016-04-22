@@ -51,35 +51,36 @@ class Notes extends React.Component{
     this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2})
     this.state = {
       dataSource: this.ds.cloneWithRows(this.props.notes),
-      note: '',
-      error: ''
+      note:'',
+      error:''
     }
   }
-  handleChange(e){
+  handleChange(e) {
     this.setState({
       note: e.nativeEvent.text
-    })
+    });
   }
-  handleSubmit(){
+  handleSubmit() {
     var note = this.state.note;
     this.setState({
-      note: ''
-    });
+      note:''
+    })
+
     api.addNote(this.props.userInfo.login, note)
-      .then((data) => {
+    .then((data) => {
         api.getNotes(this.props.userInfo.login)
-          .then((data) => {
-            this.setState({
-              dataSource: this.ds.cloneWithRows(data)
-            })
-          });
+        .then((data) => {
+          this.setState({
+            dataSource:this.ds.cloneWithRows(data)
+          })
       })
-      .catch((error) => {
-        console.log('Request failed', error);
-        this.setState({error})
-      });
+    }).catch((err) => {
+      console.log('Request failed', error);
+      this.setState({error})
+    })
   }
-  renderRow(rowData){
+
+  renderRow(rowData) {
     return (
       <View>
         <View style={styles.rowContainer}>
@@ -89,35 +90,37 @@ class Notes extends React.Component{
       </View>
     )
   }
+
   footer(){
     return (
       <View style={styles.footerContainer}>
         <TextInput
-            style={styles.searchInput}
-            value={this.state.note}
-            onChange={this.handleChange.bind(this)}
-            placeholder="New Note" />
+          style={styles.searchInput}
+          value={this.state.note}
+          onChange={this.handleChange.bind(this)}
+          placeholder="New Note" />
         <TouchableHighlight
             style={styles.button}
             onPress={this.handleSubmit.bind(this)}
             underlayColor="#88D4F5">
-              <Text style={styles.buttonText}>Submit</Text>
-          </TouchableHighlight>
+            <Text style={styles.buttonText}>Submit</Text>
+        </TouchableHighlight>
       </View>
     )
   }
   render(){
+    
     return (
       <View style={styles.container}>
-          <ListView
+      <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
             renderHeader={() => <Badge userInfo={this.props.userInfo}/>} />
-        {this.footer()}
+      {this.footer()}
       </View>
     )
   }
-};
+}
 
 Notes.propTypes = {
   userInfo: React.PropTypes.object.isRequired,
